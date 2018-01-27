@@ -23,3 +23,6 @@ You'll need a file named `watermark.png`
 
 ## TODO
 - GUI
+
+## License
+Apache 2.0
