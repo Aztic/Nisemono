@@ -1,0 +1,14 @@
+.gradle/
+build/
+output/
+.idea/
+*.iml
+*.iws
+*.ipr
+out/production/*
+src/main/java/META-INF/*
+src/main/META-INF/*
+*.png
+*.jpg
+*.bmp
+*.jpeg
