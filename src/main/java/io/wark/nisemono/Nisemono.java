@@ -23,7 +23,7 @@ public class Nisemono {
         });
 
         int option;
-        System.out.println("¿Cuál carpeta? (elige un número)");
+        System.out.println("Which folder? (choose a number)");
         for(int i=0;i<currentFolder.length;i++){
             System.out.println(String.format("%d - %s",i+1,currentFolder[i].getName()));
         }
@@ -71,6 +71,7 @@ public class Nisemono {
             System.out.println(e.toString());
         }
     }
+    /*
     public static BufferedImage changeOpacity(BufferedImage original){
         float alpha = 0.2f;
         BufferedImage another = new BufferedImage(original.getWidth(),original.getHeight(),original.getType());
@@ -81,7 +82,7 @@ public class Nisemono {
         g.dispose();
         return another;
     }
-
+    */
     /*
     private static BufferedImage resize(BufferedImage img, int height, int width){
         Image tmp = img.getScaledInstance(width,height, Image.SCALE_SMOOTH);
