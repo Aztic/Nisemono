@@ -6,10 +6,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Nisemono {
     private static final String[] validExtensions = {"png","jpg","jpeg","bmp"};
@@ -34,38 +38,25 @@ public class Nisemono {
 
         try{
             File watermark = new File("watermark.png");
-            //File[] dirs = new File(folder).listFiles(); //List all files
-            Queue<File> pendingDirectories = new LinkedList<>();
-            //Let's do a BFS
-            pendingDirectories.add(currentFolder[option-1]);
-            try{
-                do{
-                    File[] folderFiles= pendingDirectories.remove().listFiles();
-                    for(File f: folderFiles){
-                        //If it's a directory, add it to te queue
-                        if(f.isDirectory()){
-                            pendingDirectories.add(f); //Let's add it to the queue
-                        }
-                        else{
-                            String absolutePath = f.getAbsolutePath();
-                            String[] splittedFilename = absolutePath.split("\\.");
-                            String extension = splittedFilename[splittedFilename.length -1].toLowerCase();
-                            //Check if it's a valid file
-                            if(Arrays.asList(validExtensions).contains(extension) && splittedFilename.length > 1){
+            Files.walk(Paths.get(currentFolder[option-1].getAbsolutePath()))
+                    .filter(Files::isRegularFile)
+                    .forEach(file ->{
+                        String absolutePath = file.toAbsolutePath().toString();
+                        String[] splittedFilename = absolutePath.split("\\.");
+                        String extension = splittedFilename[splittedFilename.length -1].toLowerCase();
+                        if(Arrays.asList(validExtensions).contains(extension) && splittedFilename.length > 1 && absolutePath.split("-watermark").length == 1){
+                            try {
                                 splittedFilename[splittedFilename.length -2] += "-watermark";
                                 absolutePath = String.join(".",splittedFilename);
-                                BufferedImage watermarked = addWatermarkToImage(f,watermark,0.5f);
+                                BufferedImage watermarked = addWatermarkToImage(file.toFile(),watermark,0.5f);
                                 File output = new File(absolutePath);
-                                ImageIO.write(watermarked,extension,output);
+                                ImageIO.write(watermarked, extension, output);
+                                System.out.println(String.format("Saved %s.%s",splittedFilename[splittedFilename.length -2],extension));
+                            }catch (IOException io){
+                                System.out.println(String.format("Cannot save image because %s",io.toString()));
                             }
                         }
-
-                    }
-                }while(pendingDirectories.size() > 0);
-
-            }catch (NullPointerException n){
-                System.out.println(String.format("%s happened",n.toString()));
-            }
+                    });
         }
         catch (Exception e){
             System.out.println(e.toString());

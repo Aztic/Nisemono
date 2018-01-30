@@ -1,5 +1,5 @@
 # Nisemono
-Nisemono is a wartermark software, it'll traverse all subfolders of the desired folder using BFS and add the desired watermark to all images found.
+Nisemono is a wartermark software, it'll traverse all subfolders of the desired folder and add the desired watermark to all images found.
 
 you can find the jar at `out/artifacts/nisemono_jar/`
 
