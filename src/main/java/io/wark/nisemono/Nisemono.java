@@ -72,18 +72,6 @@ public class Nisemono {
         }
     }
     /*
-    public static BufferedImage changeOpacity(BufferedImage original){
-        float alpha = 0.2f;
-        BufferedImage another = new BufferedImage(original.getWidth(),original.getHeight(),original.getType());
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
-        Graphics2D g = another.createGraphics();
-        g.setComposite(ac);
-        g.drawImage(original,0,0,original.getWidth(),original.getHeight(),null);
-        g.dispose();
-        return another;
-    }
-    */
-    /*
     private static BufferedImage resize(BufferedImage img, int height, int width){
         Image tmp = img.getScaledInstance(width,height, Image.SCALE_SMOOTH);
         BufferedImage resized = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
